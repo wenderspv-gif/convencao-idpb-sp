@@ -89,7 +89,7 @@ function identificar() {
   const d = (document.getElementById('ident').value || '').replace(/\D/g, ''), err = document.getElementById('err');
   if (d.length !== 11 && d.length !== 6) { err.textContent = 'Digite os 11 números do CPF ou o código de 6 dígitos.'; return; }
   const h = d.length === 11 ? sha256(SAL + d) : sha256(SAL + 'k' + d), campo = d.length === 11 ? 'h' : 'k';
-  const id = Object.keys(eleit).find(k => eleit[k][campo] === h);
+  const id = Object.keys(eleit).find(k => eleit[k] && eleit[k][campo] === h);
   if (!id) { err.textContent = d.length === 11 ? 'CPF não encontrado na lista de inscritos. Tente o código da mesa.' : 'Código não encontrado. Confira com a mesa.'; return; }
   if (eleit[id].v) { err.innerHTML = '<b>' + esc(eleit[id].n) + '</b> está inscrito(a) como <b>visitante</b>. Visitantes não têm direito a voto.'; return; }
   candTemp = id; tela = 'quem'; render();
